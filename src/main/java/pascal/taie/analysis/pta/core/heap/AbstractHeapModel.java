@@ -25,6 +25,8 @@ package pascal.taie.analysis.pta.core.heap;
 import pascal.taie.World;
 import pascal.taie.config.AnalysisOptions;
 import pascal.taie.config.ConfigException;
+import pascal.taie.ir.exp.NewArray;
+import pascal.taie.ir.exp.NumberLiteral;
 import pascal.taie.ir.exp.ReferenceLiteral;
 import pascal.taie.ir.exp.StringLiteral;
 import pascal.taie.ir.stmt.New;
@@ -92,6 +94,10 @@ public abstract class AbstractHeapModel implements HeapModel {
 
     private final Map<MockObj, MockObj> mockObjs = Maps.newMap();
 
+    private final Map<Type, Obj> zeroSizedArrays = Maps.newMap();
+
+    private static final Descriptor zeroSizedArrayDesc = () -> "ZeroSizedArray";
+
     /**
      * Counter for indexing Objs.
      */
@@ -152,6 +158,16 @@ public abstract class AbstractHeapModel implements HeapModel {
         if (isMergeExceptionObjects && typeSystem.isSubtype(throwable, type)) {
             return getMergedObj(allocSite);
         }
+
+        // use special object for new array T[0]
+        if (allocSite.getRValue() instanceof NewArray newArr) {
+            if (newArr.getLength().isConst()) {
+                if (((NumberLiteral) newArr.getLength().getConstValue()).getNumber().longValue() == 0) {
+                    return getZeroSizedArrayObj(type);
+                }
+            }
+        }
+
         return doGetObj(allocSite);
     }
 
@@ -172,6 +188,18 @@ public abstract class AbstractHeapModel implements HeapModel {
     protected NewObj getNewObj(New allocSite) {
         return newObjs.computeIfAbsent(allocSite,
                 site -> add(new NewObj(site)));
+    }
+
+    /**
+     * Get the mock object for a zero-sized array.
+     * Arrays with the same type share one mocked representation
+     *
+     * @param type the type of allocated zero-sized array (e.g. String[])
+     * @return mock object for the zero-sized array
+     */
+    protected Obj getZeroSizedArrayObj(Type type) {
+        return zeroSizedArrays.computeIfAbsent(type,
+                ty -> getMockObj(zeroSizedArrayDesc, "<Merged new T[0]>", type, false));
     }
 
     /**
