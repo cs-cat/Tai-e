@@ -25,6 +25,7 @@ package pascal.taie.analysis.pta.core.heap;
 import pascal.taie.World;
 import pascal.taie.config.AnalysisOptions;
 import pascal.taie.config.ConfigException;
+import pascal.taie.ir.exp.Var;
 import pascal.taie.ir.exp.NewArray;
 import pascal.taie.ir.exp.NumberLiteral;
 import pascal.taie.ir.exp.ReferenceLiteral;
@@ -159,16 +160,21 @@ public abstract class AbstractHeapModel implements HeapModel {
             return getMergedObj(allocSite);
         }
 
-        // use special object for new array T[0]
-        if (allocSite.getRValue() instanceof NewArray newArr) {
-            if (newArr.getLength().isConst()) {
-                if (((NumberLiteral) newArr.getLength().getConstValue()).getNumber().longValue() == 0) {
-                    return getZeroSizedArrayObj(type);
-                }
-            }
+        if (isZeroSizedArrayAllocation(allocSite)) {
+            return getZeroSizedArrayObj(type);
         }
 
         return doGetObj(allocSite);
+    }
+
+    private boolean isZeroSizedArrayAllocation(New allocSite) {
+        if (!(allocSite.getRValue() instanceof NewArray newArr)) {
+            return false;
+        }
+        Var length = newArr.getLength();
+        return length.isConst()
+                && length.getConstValue() instanceof NumberLiteral numLit
+                && numLit.getNumber().longValue() == 0;
     }
 
     /**
@@ -199,7 +205,7 @@ public abstract class AbstractHeapModel implements HeapModel {
      */
     protected Obj getZeroSizedArrayObj(Type type) {
         return zeroSizedArrays.computeIfAbsent(type,
-                ty -> getMockObj(zeroSizedArrayDesc, "<Merged new T[0]>", type, false));
+                ty -> getMockObj(zeroSizedArrayDesc, "<Merged zero-length " + type + ">", type, false));
     }
 
     /**

@@ -8,6 +8,10 @@ class ZeroSizedArray {
         ct2.setObj(0, o2);
         A res1 = ct1.getObj(0);
         A res2 = ct2.getObj(0);
+
+        PTAAssert.sizeEquals(1, res1, res2);
+        PTAAssert.contains(res1, o1);
+        PTAAssert.contains(res2, o2);
     }
 }
 

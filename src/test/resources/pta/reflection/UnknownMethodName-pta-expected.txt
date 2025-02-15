@@ -32,9 +32,9 @@ Points-to sets of all variables
 []:<UnknownMethodName: void invokeNonArg(java.lang.String)>/name -> [[]:MergedObj{<Merged java.lang.String>}]
 []:<UnknownMethodName: void invokeNonArg(java.lang.String)>/nonArg -> [[]:ReflectionMetaObj{alloc=<E: void nonArg()>,type=java.lang.reflect.Method}, []:ReflectionMetaObj{alloc=<java.lang.Object: int hashCode()>,type=java.lang.reflect.Method}, []:ReflectionMetaObj{alloc=<java.lang.Object: java.lang.Class getClass()>,type=java.lang.reflect.Method}, []:ReflectionMetaObj{alloc=<java.lang.Object: java.lang.String toString()>,type=java.lang.reflect.Method}, []:ReflectionMetaObj{alloc=<java.lang.Object: void notify()>,type=java.lang.reflect.Method}, []:ReflectionMetaObj{alloc=<java.lang.Object: void notifyAll()>,type=java.lang.reflect.Method}, []:ReflectionMetaObj{alloc=<java.lang.Object: void wait()>,type=java.lang.reflect.Method}, []:UnknownReflectionMetaObj{alloc=MethodInfo[invoke=<UnknownMethodName: void invokeNonArg(java.lang.String)>[3@L14] temp$2 = invokevirtual temp$0.getMethod(name, temp$1), clazz=E, name=null],type=java.lang.reflect.Method in <UnknownMethodName: void invokeNonArg(java.lang.String)>}]
 []:<UnknownMethodName: void invokeNonArg(java.lang.String)>/temp$0 -> [[]:ConstantObj{java.lang.Class: E.class}]
-[]:<UnknownMethodName: void invokeNonArg(java.lang.String)>/temp$1 -> [[]:ZeroSizedArray{alloc=<Merged new T[0]>,type=java.lang.Class[]}]
+[]:<UnknownMethodName: void invokeNonArg(java.lang.String)>/temp$1 -> [[]:ZeroSizedArray{alloc=<Merged zero-length java.lang.Class[]>,type=java.lang.Class[]}]
 []:<UnknownMethodName: void invokeNonArg(java.lang.String)>/temp$2 -> [[]:UnknownReflectionMetaObj{alloc=MethodInfo[invoke=<UnknownMethodName: void invokeNonArg(java.lang.String)>[3@L14] temp$2 = invokevirtual temp$0.getMethod(name, temp$1), clazz=E, name=null],type=java.lang.reflect.Method in <UnknownMethodName: void invokeNonArg(java.lang.String)>}]
-[]:<UnknownMethodName: void invokeNonArg(java.lang.String)>/temp$3 -> [[]:ZeroSizedArray{alloc=<Merged new T[0]>,type=java.lang.Object[]}]
+[]:<UnknownMethodName: void invokeNonArg(java.lang.String)>/temp$3 -> [[]:ZeroSizedArray{alloc=<Merged zero-length java.lang.Object[]>,type=java.lang.Object[]}]
 []:<UnknownMethodName: void invokeNonArg(java.lang.String)>/temp$5 -> [[]:NewObj{<UnknownMethodName: void invokeNonArg(java.lang.String)>[8@L16] newarray java.lang.String[%intconst1]}]
 []:<UnknownMethodName: void invokeOneArg(java.lang.String,java.lang.Class[])>/%stringconst10 -> [[]:ConstantObj{java.lang.String: "<D: void oneArg(E)>"}]
 []:<UnknownMethodName: void invokeOneArg(java.lang.String,java.lang.Class[])>/%stringconst12 -> [[]:ConstantObj{java.lang.String: "<java.lang.Object: boolean equals(java.lang.Object)>"}]
@@ -112,5 +112,5 @@ Points-to sets of all array indexes
 []:NewObj{<UnknownMethodName: void main(java.lang.String[])>[35@L9] newarray java.lang.Class[%intconst2]}[*] -> [[]:ConstantObj{java.lang.Class: E.class}]
 []:NewObj{<UnknownMethodName: void main(java.lang.String[])>[41@L10] newarray java.lang.Class[%intconst2]}[*] -> [[]:ConstantObj{java.lang.Class: D.class}, []:ConstantObj{java.lang.Class: java.lang.Object.class}]
 []:NewObj{<UnknownMethodName: void main(java.lang.String[])>[6@L7] newarray java.lang.Class[%intconst2]}[*] -> [[]:ConstantObj{java.lang.Class: D.class}, []:ConstantObj{java.lang.Class: java.lang.Object.class}]
-[]:ZeroSizedArray{alloc=<Merged new T[0]>,type=java.lang.Object[]}[*] -> []
+[]:ZeroSizedArray{alloc=<Merged zero-length java.lang.Object[]>,type=java.lang.Object[]}[*] -> []
 
